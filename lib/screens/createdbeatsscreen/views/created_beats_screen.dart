@@ -4,6 +4,7 @@ import 'package:imc_track/network/responses/createdbeat/created_beat_response.da
 import 'package:imc_track/screens/createdbeatsscreen/controller/created_beat_controller.dart';
 
 import '../../../routes/routes.dart';
+import '../../../session_manager.dart';
 import '../../../utils/appfonts.dart';
 import '../../../widgets/drawer_nav.dart';
 
@@ -16,6 +17,23 @@ class CreatedBeatScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("All Beats"),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              tooltip: 'Refresh',
+              onPressed: () {
+                createdBeatController.onInit();
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.logout),
+              tooltip: 'Logout',
+              onPressed: () async {
+                await SessionManager.clearSession();
+                Get.offAllNamed(Routes.loginScreen);
+              },
+            ),
+          ],
         ),
         drawer: DrawerWidget(),
         body: SafeArea(

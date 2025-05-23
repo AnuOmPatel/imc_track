@@ -4,6 +4,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:imc_track/screens/nearestbeatscreen/controller/nearest_beat_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../routes/routes.dart';
+import '../../../session_manager.dart';
 import '../../../utils/appfonts.dart';
 import '../../../widgets/drawer_nav.dart';
 import '../../homescreen/location/location_controller.dart';
@@ -56,7 +58,25 @@ class NearestBeatScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Nearest Beats",style: AppFonts.Montserrat.copyWith(
         color: Colors.black,
-        fontWeight: FontWeight.bold,))
+        fontWeight: FontWeight.bold,)),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Refresh',
+            onPressed: () {
+              nearestBeatController.onInit();
+              locationController.onInit();
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Logout',
+            onPressed: () async {
+              await SessionManager.clearSession();
+              Get.offAllNamed(Routes.loginScreen);
+            },
+          ),
+        ],
       ),
       drawer: DrawerWidget(),
       body: SafeArea(

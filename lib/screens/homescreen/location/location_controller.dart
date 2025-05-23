@@ -210,12 +210,19 @@ class LocationController extends GetxController {
         }
 
         if (beetList != null) {
+
           nearestBeets.assignAll(beetList);
+          loading.value = false;
+          DialogHelper.dismissDialog();
         }
       } else {
+        loading.value = false;
+        DialogHelper.dismissDialog();
         Get.snackbar("Info", "No beets available nearby.");
       }
     } catch (e) {
+      loading.value = false;
+      DialogHelper.dismissDialog();
       Get.snackbar("Error", "Failed to fetch nearby beets: $e");
       print("Failed to fetch nearby beets: $e");
     } finally {

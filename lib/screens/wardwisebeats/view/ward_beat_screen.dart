@@ -5,6 +5,9 @@ import 'package:imc_track/screens/createdbeatsscreen/controller/created_beat_con
 import 'package:imc_track/screens/wardwisebeats/controller/ward_beat_controller.dart';
 import 'package:imc_track/widgets/drawer_nav.dart';
 
+import '../../../routes/routes.dart';
+import '../../../session_manager.dart';
+
 class WardWiseBeatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -15,6 +18,23 @@ class WardWiseBeatScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("Beats in the Ward"),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              tooltip: 'Refresh',
+              onPressed: () {
+                wardWiseBeatController.onInit();
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.logout),
+              tooltip: 'Logout',
+              onPressed: () async {
+                await SessionManager.clearSession();
+                Get.offAllNamed(Routes.loginScreen);
+              },
+            ),
+          ],
         ),
         drawer: DrawerWidget(),
         body: SafeArea(

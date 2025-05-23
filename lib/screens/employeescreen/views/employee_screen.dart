@@ -5,6 +5,7 @@ import 'package:imc_track/network/responses/emp_list_response/emp_list_response.
 import 'package:imc_track/screens/employeescreen/controller/employee_controller.dart';
 
 import '../../../routes/routes.dart';
+import '../../../session_manager.dart';
 import '../../../utils/appfonts.dart';
 import '../../../widgets/drawer_nav.dart';
 
@@ -18,6 +19,22 @@ class EmployeesScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
         title: Text("All Employees"),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              tooltip: 'Refresh',
+              onPressed: () {
+                empController.onInit();}
+            ),
+            IconButton(
+              icon: const Icon(Icons.logout),
+              tooltip: 'Logout',
+              onPressed: () async {
+                await SessionManager.clearSession();
+                Get.offAllNamed(Routes.loginScreen);
+              },
+            ),
+          ],
     ),
     drawer: DrawerWidget(),
     body: SafeArea(

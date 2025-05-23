@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imc_track/screens/profilescreen/controller/profile_controller.dart';
 
+import '../../../routes/routes.dart';
+import '../../../session_manager.dart';
 import '../../../utils/appfonts.dart';
 import '../../../widgets/drawer_nav.dart';
 
@@ -13,6 +15,23 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Refresh',
+            onPressed: () {
+              profileController.onInit();
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Logout',
+            onPressed: () async {
+              await SessionManager.clearSession();
+              Get.offAllNamed(Routes.loginScreen);
+            },
+          ),
+        ],
       ),
       drawer: DrawerWidget(),
       body: SafeArea(

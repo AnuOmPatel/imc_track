@@ -151,8 +151,11 @@ class HomeScreenController extends GetxController {
         //SnackbarHelper.showSnackbar(title: "Success", message: wardMasterResponse.message ?? "Login successful");
         final dashBoardData = dashboardResponse.result?.dashboardData ?? [];
         dashboardData.value = dashboardResponse.result?.dashboardData?.first ?? DashboardData();
-
+        loading.value = false;
+        DialogHelper.dismissDialog();
       } else {
+        loading.value = false;
+        DialogHelper.dismissDialog();
         Get.snackbar("Error", dashboardResponse.message ?? "No data received");
       }
     } catch (e) {
@@ -162,6 +165,8 @@ class HomeScreenController extends GetxController {
         title: "Error",
         content: Text("failed: ${e.toString()}"),
       );
+      loading.value = false;
+      DialogHelper.dismissDialog();
     }
     finally {
       loading.value = false;

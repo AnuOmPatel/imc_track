@@ -6,6 +6,7 @@ import 'package:imc_track/network/responses/ward_master_response/ward_master_res
 import 'package:imc_track/routes/routes.dart';
 import 'package:imc_track/screens/homescreen/controller/HomeScreenController.dart';
 
+import '../../../session_manager.dart';
 import '../../../utils/appfonts.dart';
 import '../../../widgets/drawer_nav.dart';
 import '../location/location_controller.dart';
@@ -19,6 +20,25 @@ class Homescreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Home"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Refresh',
+            onPressed: () {
+              homeController.onInit();
+              locationController.onInit();
+              //Get.offNamed(currentRoute); // Or use your own refresh logic
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Logout',
+            onPressed: () async {
+              await SessionManager.clearSession();
+              Get.offAllNamed(Routes.loginScreen);
+            },
+          ),
+        ],
       ),
       drawer: DrawerWidget(),
       body: SafeArea(

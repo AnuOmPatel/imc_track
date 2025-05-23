@@ -5,13 +5,34 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:imc_track/screens/mapviewunassigned/controller/unassigned_map_controller.dart';
 import 'package:imc_track/widgets/drawer_nav.dart';
 
+import '../../../routes/routes.dart';
+import '../../../session_manager.dart';
+
 class UnAssignedBeatMapScreen extends StatelessWidget{
+
   final UnAssignedBeatMapController unAssignedBeatMapController =
   Get.put(UnAssignedBeatMapController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Un-Assigned Beats"),),
+      appBar: AppBar(title: Text("Un-Assigned Beats"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Refresh',
+            onPressed: () {
+             // unAssignedBeatMapController.;
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Logout',
+            onPressed: () async {
+              await SessionManager.clearSession();
+              Get.offAllNamed(Routes.loginScreen);
+            },
+          ),
+        ],),
       drawer: DrawerWidget(),
       body: SafeArea(child: Obx((){
         return GoogleMap(
@@ -24,6 +45,7 @@ class UnAssignedBeatMapScreen extends StatelessWidget{
 
               // Move the camera after map is created and center is ready
               final center = unAssignedBeatMapController.mapCenter.value;
+              print("map center in screen ${center}");
               if (center != null) {
                 controller.animateCamera(
                   CameraUpdate.newCameraPosition(

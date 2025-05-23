@@ -6,6 +6,7 @@ import 'package:imc_track/screens/unassignedbeats/controller/unassigned_beat_con
 import 'package:imc_track/widgets/drawer_nav.dart';
 
 import '../../../routes/routes.dart';
+import '../../../session_manager.dart';
 import '../../../utils/appfonts.dart';
 
 class UnAssignedBeatScreen extends StatelessWidget {
@@ -15,7 +16,24 @@ class UnAssignedBeatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Un-Assigned Beat"),),
+      appBar: AppBar(title: Text("Un-Assigned Beat"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Refresh',
+            onPressed: () {
+              unAssignedBeatController.onInit();
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Logout',
+            onPressed: () async {
+              await SessionManager.clearSession();
+              Get.offAllNamed(Routes.loginScreen);
+            },
+          ),
+        ],),
       drawer: DrawerWidget(),
       body: SafeArea(child: Column(
         children: [

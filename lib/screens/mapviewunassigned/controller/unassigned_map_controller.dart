@@ -66,6 +66,7 @@ class UnAssignedBeatMapController extends GetxController{
           );
           final midpoint = getMidPoint(points);
           mapCenter.value = midpoint;
+          print("map center${mapCenter.value}");
           markers.add(
             Marker(
               markerId: MarkerId("marker_${beat.beetId}"),

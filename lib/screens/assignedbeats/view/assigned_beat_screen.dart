@@ -1,20 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imc_track/network/responses/assignedbeats/assigned_beats_response.dart';
+import 'package:imc_track/routes/routes.dart';
 import 'package:imc_track/screens/assignedbeats/controller/assigned_beat_controller.dart';
 
+import '../../../session_manager.dart';
 import '../../../utils/appfonts.dart';
 import '../../../widgets/drawer_nav.dart';
+import '../../../widgets/options_menu.dart';
 
 class AssignedBeatScreen extends StatelessWidget {
   final AssignedBeatController assignedBeatController =
   Get.put(AssignedBeatController());
-
+  final currentRoute = Get.currentRoute;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Assigned Beats"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Refresh',
+            onPressed: () {
+              assignedBeatController.onInit();
+
+              //Get.offNamed(currentRoute); // Or use your own refresh logic
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Logout',
+            onPressed: () async {
+              await SessionManager.clearSession();
+              Get.offAllNamed(Routes.loginScreen);
+            },
+          ),
+        ],
       ),
       drawer: DrawerWidget(),
       body: SafeArea(
