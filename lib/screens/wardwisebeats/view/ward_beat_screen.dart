@@ -7,6 +7,7 @@ import 'package:imc_track/widgets/drawer_nav.dart';
 
 import '../../../routes/routes.dart';
 import '../../../session_manager.dart';
+import '../../../utils/appfonts.dart';
 
 class WardWiseBeatScreen extends StatelessWidget {
   @override
@@ -17,13 +18,17 @@ class WardWiseBeatScreen extends StatelessWidget {
     // final BeatPageController beatController = Get.find<BeatPageController>();
     return Scaffold(
         appBar: AppBar(
-          title: Text("Beats in the Ward"),
+          title: Text("Map View",style: AppFonts.Montserrat.copyWith(
+            fontSize: 20,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),),
           actions: [
             IconButton(
               icon: const Icon(Icons.refresh),
               tooltip: 'Refresh',
               onPressed: () {
-                wardWiseBeatController.onInit();
+               wardWiseBeatController.drawBeatPolylinesAndMarkers();
               },
             ),
             IconButton(

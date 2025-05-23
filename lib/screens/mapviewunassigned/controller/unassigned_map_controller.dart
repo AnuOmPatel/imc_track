@@ -28,6 +28,7 @@ class UnAssignedBeatMapController extends GetxController{
   }
 
   Future<void> drawBeatPolylinesAndMarkers() async {
+    print("running drawBeatPolylinesAndMarkers");
     Set<Polyline> polylines = {};
     Set<Marker> markers = {};
     //final List<EmployeeWithBeat> empList = [];

@@ -16,13 +16,17 @@ class UnAssignedBeatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Un-Assigned Beat"),
+      appBar: AppBar(title: Text("Un-Assigned",style: AppFonts.Montserrat.copyWith(
+        fontSize: 20,
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+      ),),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
             tooltip: 'Refresh',
             onPressed: () {
-              unAssignedBeatController.onInit();
+              unAssignedBeatController.getStoredZoneAndWard();
             },
           ),
           IconButton(

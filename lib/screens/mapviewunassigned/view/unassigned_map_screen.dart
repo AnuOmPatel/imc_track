@@ -7,6 +7,7 @@ import 'package:imc_track/widgets/drawer_nav.dart';
 
 import '../../../routes/routes.dart';
 import '../../../session_manager.dart';
+import '../../../utils/appfonts.dart';
 
 class UnAssignedBeatMapScreen extends StatelessWidget{
 
@@ -15,13 +16,17 @@ class UnAssignedBeatMapScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Un-Assigned Beats"),
+      appBar: AppBar(title: Text("Map View",style: AppFonts.Montserrat.copyWith(
+        fontSize: 20,
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+      ),),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
             tooltip: 'Refresh',
             onPressed: () {
-             // unAssignedBeatMapController.;
+              unAssignedBeatMapController.drawBeatPolylinesAndMarkers();
             },
           ),
           IconButton(

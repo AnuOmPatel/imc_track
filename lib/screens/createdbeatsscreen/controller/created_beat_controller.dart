@@ -18,9 +18,11 @@ class CreatedBeatController extends GetxController{
   @override
   void onInit() {
     super.onInit();
+
     getStoredZoneAndWard();
   }
   Future<void> getStoredZoneAndWard() async {
+
     final storedZoneId = await SessionManager.getZoneId();
     final storedWardId = await SessionManager.getWardId();
 
@@ -35,6 +37,7 @@ class CreatedBeatController extends GetxController{
   }
 
   void fetchCreatedBeats(int zoneId, int wardId) async{
+    print("running fetchCreatedBeats");
     try {
       loading.value = true;
       DialogHelper.showLoading();

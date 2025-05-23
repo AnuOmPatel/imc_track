@@ -18,7 +18,11 @@ class EmployeesScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-        title: Text("All Employees"),
+        title: Text("All Employees",style: AppFonts.Montserrat.copyWith(
+          fontSize: 20,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),),
           actions: [
             IconButton(
               icon: const Icon(Icons.refresh),

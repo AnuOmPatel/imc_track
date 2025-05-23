@@ -250,8 +250,8 @@ class LocationController extends GetxController {
   }
 
   Future<void> requestNearestEmployees() async {
-    loading.value = true;
-    DialogHelper.showLoading();
+    /*loading.value = true;
+    DialogHelper.showLoading();*/
     try {
       final coordinates = [
         [
@@ -283,17 +283,14 @@ class LocationController extends GetxController {
         } else {
           Get.snackbar("Info", "No beats available nearby.");
         }
-        loading.value = false;
-        DialogHelper.dismissDialog();
+
       }
     } catch (e) {
-      loading.value = false;
-      DialogHelper.dismissDialog();
+
       Get.snackbar("Error", "Failed to fetch nearby beats: $e");
       print("Failed to fetch nearby beets: $e");
     } finally {
-      loading.value = false;
-      DialogHelper.dismissDialog();
+
     }
   }
 

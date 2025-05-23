@@ -17,13 +17,17 @@ class AssignedBeatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Assigned Beats"),
+        title: Text("Assigned Beats",style: AppFonts.Montserrat.copyWith(
+          fontSize: 20,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
             tooltip: 'Refresh',
             onPressed: () {
-              assignedBeatController.onInit();
+              assignedBeatController.getStoredZoneAndWard();
 
               //Get.offNamed(currentRoute); // Or use your own refresh logic
             },

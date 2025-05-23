@@ -16,13 +16,17 @@ class CreatedBeatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("All Beats"),
+          title: Text("All Beats",style: AppFonts.Montserrat.copyWith(
+            fontSize: 20,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),),
           actions: [
             IconButton(
               icon: const Icon(Icons.refresh),
               tooltip: 'Refresh',
               onPressed: () {
-                createdBeatController.onInit();
+                createdBeatController.fetchCreatedBeats(int.parse(createdBeatController.zoneId.value), int.parse(createdBeatController.wardId.value));
               },
             ),
             IconButton(

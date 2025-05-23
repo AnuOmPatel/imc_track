@@ -19,14 +19,18 @@ class Homescreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text("Home",style: AppFonts.Montserrat.copyWith(
+          fontSize: 20,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
             tooltip: 'Refresh',
             onPressed: () {
-              homeController.onInit();
-              locationController.onInit();
+              homeController.loadUserData();
+              locationController.requestNearestBeets();
               //Get.offNamed(currentRoute); // Or use your own refresh logic
             },
           ),
