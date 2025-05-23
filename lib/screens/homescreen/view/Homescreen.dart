@@ -134,9 +134,11 @@ class Homescreen extends StatelessWidget {
                                         ),
                                       ));
                                 }).toList(),
-                                onChanged: (newZone) {
+                                onChanged: (newZone) async {
                                   if (newZone != null) {
                                     homeController.selectedZone.value = newZone;
+                                    await SessionManager.setZoneId(newZone.zoneId!.toString());
+
                                     homeController.getWardList(homeController
                                         .selectedZone.value!.zoneId!
                                         .toString());
@@ -190,9 +192,11 @@ class Homescreen extends StatelessWidget {
                                         ),
                                       ));
                                 }).toList(),
-                                onChanged: (newWard) {
+                                onChanged: (newWard) async {
                                   if (newWard != null) {
                                     homeController.selectedWard.value = newWard;
+                                    await SessionManager.setWardId(newWard.wardId!.toString());
+
                                     homeController.getDashboardData(
                                         homeController
                                             .selectedZone.value!.zoneId!,

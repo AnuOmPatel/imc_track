@@ -19,6 +19,7 @@ import '../../../utils/dialog_helper.dart';
 import 'package:http/http.dart' as http;
 import 'dart:ui' as ui;
 import 'dart:math' as math;
+
 class LocationController extends GetxController {
   var address = "Fetching location...".obs;
   var isFetching = false.obs;
@@ -100,14 +101,13 @@ class LocationController extends GetxController {
     } catch (e) {
       address.value = "Please Turn On GPS";
       loading.value = false;
-    }
-    finally{
+    } finally {
       loading.value = false;
     }
   }
 
   Future<void> fetchLocationForEmployees() async {
-   /* if (loading.value) return;
+    /* if (loading.value) return;
     loading.value = true;
 
     if (!DialogHelper.isDialogOpen) DialogHelper.showLoading();*/
@@ -128,7 +128,8 @@ class LocationController extends GetxController {
       );
       currentPosition.value =
           LatLng(initialPosition.latitude, initialPosition.longitude);
-      await getAddressFromCoordinates(initialPosition.latitude, initialPosition.longitude);
+      await getAddressFromCoordinates(
+          initialPosition.latitude, initialPosition.longitude);
 
       await requestNearestEmployees();
 
@@ -143,8 +144,7 @@ class LocationController extends GetxController {
       print("inside fetchLocationForEmployees catch");
       address.value = "Please Turn On GPS";
       loading.value = false;
-    }
-    finally{
+    } finally {
       loading.value = false;
       DialogHelper.dismissDialog();
     }
@@ -155,20 +155,18 @@ class LocationController extends GetxController {
       List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
       if (placemarks.isNotEmpty) {
         Placemark place = placemarks[0];
-        address.value = "${place.street}, ${place.subLocality}, ${place.locality}";
-
+        address.value =
+            "${place.street}, ${place.subLocality}, ${place.locality}";
 
         String fullAddress =
             "${place.street}, ${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.postalCode}, ${place.country}";
         String? subThoroughfare = place.subThoroughfare;
 
-       //print("Full Address: $fullAddress");
-       //print("SubThoroughfare: $subThoroughfare");
+        //print("Full Address: $fullAddress");
+        //print("SubThoroughfare: $subThoroughfare");
 
         // Example: updating a UI element (like a GetX observable)
         // addressText.value = subThoroughfare ?? "Unknown";
-
-
       }
     } catch (e) {
       address.value = "Failed to fetch address";
@@ -180,7 +178,6 @@ class LocationController extends GetxController {
   }
 
   Future<void> requestNearestBeets() async {
-
     print("inside requestNearestBeets");
     try {
       loading.value = true;
@@ -210,7 +207,6 @@ class LocationController extends GetxController {
         }
 
         if (beetList != null) {
-
           nearestBeets.assignAll(beetList);
           loading.value = false;
           DialogHelper.dismissDialog();
@@ -275,7 +271,7 @@ class LocationController extends GetxController {
       if (nearByEmpResponse.status == true) {
         final List<BeetData>? beatDataList = nearByEmpResponse.result!.data;
 
-       // String imageUrl=empList![0].empData![0].employeePhoto.toString();
+        // String imageUrl=empList![0].empData![0].employeePhoto.toString();
         if (beatDataList != null) {
           myBeatDataList.assignAll(beatDataList);
           //loadCustomMarker(empList);
@@ -283,17 +279,12 @@ class LocationController extends GetxController {
         } else {
           Get.snackbar("Info", "No beats available nearby.");
         }
-
       }
     } catch (e) {
-
       Get.snackbar("Error", "Failed to fetch nearby beats: $e");
       print("Failed to fetch nearby beets: $e");
-    } finally {
-
-    }
+    } finally {}
   }
-
 
 /*  void drawBeatPolylines() {
     Set<Polyline> polylines = {};
@@ -340,7 +331,6 @@ class LocationController extends GetxController {
     beatMarkers.value = markers;
   }*/
 
-
   Future<void> drawBeatPolylinesAndMarkers() async {
     Set<Polyline> polylines = {};
     Set<Marker> markers = {};
@@ -359,7 +349,6 @@ class LocationController extends GetxController {
         polylineToBeatMap[polylineId] = beat;
 
         if (points.isNotEmpty) {
-
           polylines.add(
             Polyline(
               polylineId: PolylineId("beat_${beat.beetId}"),
@@ -378,22 +367,23 @@ class LocationController extends GetxController {
                 drawBeatPolylinesAndMarkers();
                 //highlightedPolylineId.value=polylineId;
 
-              /*
+                /*
                 locationController.selectedBeatData.value = selectedBeat;
                 locationController.selectedEmpList.value = selectedBeat?.empData ?? [];*/
               },
             ),
           );
           final midpoint = getMidPoint(points);
-          final empDataList=beat.empData??[];
-          String imgUrl="https://ezismartswitch.com/imc/assets/profile_photo/default_avatar.png";
-
+          final empDataList = beat.empData ?? [];
+          String imgUrl =
+              "https://ezismartswitch.com/imc/assets/profile_photo/default_avatar.png";
 
           if (empDataList.isNotEmpty) {
             print("Employee Name: ${empDataList[0].employeeName}");
             for (int i = 0; i < empDataList.length; i++) {
               final emp = empDataList[i];
-              final offsetPosition = getOffsetLatLng(midpoint, i, empDataList.length);
+              final offsetPosition =
+                  getOffsetLatLng(midpoint, i, empDataList.length);
               final imageUrl = emp.employeePhoto?.isNotEmpty == true
                   ? emp.employeePhoto!
                   : "https://ezismartswitch.com/imc/assets/profile_photo/default_avatar.png";
@@ -404,16 +394,16 @@ class LocationController extends GetxController {
                   markerId: MarkerId("emp_${emp.empId}"),
                   position: offsetPosition,
                   icon: icon,
-                  infoWindow: InfoWindow(title: emp.employeeName, snippet: emp.subBeatName),
+                  infoWindow: InfoWindow(
+                      title: emp.employeeName, snippet: emp.subBeatName),
                 ),
               );
             }
-           // imgUrl = empDataList[0].employeePhoto ?? "https://ezismartswitch.com/imc/assets/profile_photo/15096.jpg";
+            // imgUrl = empDataList[0].employeePhoto ?? "https://ezismartswitch.com/imc/assets/profile_photo/15096.jpg";
           } else {
             print("No employees found");
             //imgUrl = "https://ezismartswitch.com/imc/assets/profile_photo/15096.jpg";
           }
-
         }
       }
     }
@@ -432,9 +422,12 @@ class LocationController extends GetxController {
 
         if (empData != null && empData.isNotEmpty) {
           for (var emp in empData) {
-            if (emp.workingStatus == "Current Beat" && emp.employeePhoto != null) {
+            if (emp.workingStatus == "Current Beat" &&
+                emp.employeePhoto != null) {
               //String imageUrl = emp.employeePhoto!.toString();
-              String imageUrl="https://ezismartswitch.com/imc/assets/profile_photo/default_avatar.png".toString();
+              String imageUrl =
+                  "https://ezismartswitch.com/imc/assets/profile_photo/default_avatar.png"
+                      .toString();
               print("Loading custom marker for employee: ${emp.employeeName}");
 
               beatMarkerIcon = await getMarkerIconFromUrl(imageUrl);
@@ -446,7 +439,6 @@ class LocationController extends GetxController {
           }
         }
       }
-
 
       beatMarkerIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(size: Size(100, 100)),
@@ -461,21 +453,22 @@ class LocationController extends GetxController {
     }
   }
 
-
-  Future<BitmapDescriptor> getMarkerIconFromUrl1(String url, {int size = 100}) async {
+  Future<BitmapDescriptor> getMarkerIconFromUrl1(String url,
+      {int size = 100}) async {
     final response = await http.get(Uri.parse(url));
     final bytes = response.bodyBytes;
 
     final codec = await ui.instantiateImageCodec(bytes, targetWidth: size);
     final frame = await codec.getNextFrame();
-    final byteData = await frame.image.toByteData(format: ui.ImageByteFormat.png);
+    final byteData =
+        await frame.image.toByteData(format: ui.ImageByteFormat.png);
 
     return BitmapDescriptor.fromBytes(byteData!.buffer.asUint8List());
   }
 
-
-  Future<BitmapDescriptor> getMarkerIconFromUrl(String url, {int size = 180}) async {
-   /* if (empId != null && employeeIconCache.containsKey(empId)) {
+  Future<BitmapDescriptor> getMarkerIconFromUrl(String url,
+      {int size = 180}) async {
+    /* if (empId != null && employeeIconCache.containsKey(empId)) {
       return employeeIconCache[empId]!;
     }*/
 
@@ -491,23 +484,29 @@ class LocationController extends GetxController {
     final paint = Paint()..isAntiAlias = true;
 
     final radius = size / 2.0;
-    final rect = Rect.fromCircle(center: Offset(radius, radius), radius: radius);
+    final rect =
+        Rect.fromCircle(center: Offset(radius, radius), radius: radius);
 
     canvas.drawCircle(Offset(radius, radius), radius, paint);
     paint.blendMode = BlendMode.srcIn;
-    canvas.drawImageRect(image, Offset.zero & Size(image.width.toDouble(), image.height.toDouble()), rect, paint);
+    canvas.drawImageRect(
+        image,
+        Offset.zero & Size(image.width.toDouble(), image.height.toDouble()),
+        rect,
+        paint);
 
-    final circularImage = await pictureRecorder.endRecording().toImage(size, size);
-    final byteData = await circularImage.toByteData(format: ui.ImageByteFormat.png);
+    final circularImage =
+        await pictureRecorder.endRecording().toImage(size, size);
+    final byteData =
+        await circularImage.toByteData(format: ui.ImageByteFormat.png);
     final icon = BitmapDescriptor.fromBytes(byteData!.buffer.asUint8List());
 
-  /*  if (empId != null) {
+    /*  if (empId != null) {
       employeeIconCache[empId] = icon;
     }
 */
     return icon;
   }
-
 
   LatLng getOffsetLatLng(LatLng base, int index, int total) {
     const double radiusInMeters = 10;
@@ -516,7 +515,8 @@ class LocationController extends GetxController {
     double dy = radiusInMeters * math.sin(angle * math.pi / 180);
 
     double newLat = base.latitude + (dy / 111111);
-    double newLng = base.longitude + (dx / (111111 * math.cos(base.latitude * math.pi / 180)));
+    double newLng = base.longitude +
+        (dx / (111111 * math.cos(base.latitude * math.pi / 180)));
 
     return LatLng(newLat, newLng);
   }
@@ -533,7 +533,4 @@ class LocationController extends GetxController {
 
     return LatLng(latSum / totalPoints, lngSum / totalPoints);
   }
-
-
-
 }
